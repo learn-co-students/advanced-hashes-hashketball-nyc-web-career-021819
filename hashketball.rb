@@ -117,7 +117,7 @@ def game_hash
   }
 end
 
-#### helper methods ###############
+#### helper methods ###############################################################
 def players
   #method to combine our players data in one hash
   home = game_hash[:home][:players]
@@ -127,28 +127,31 @@ def players
 end
 
 def find_player(name)
-  #method to take one player's stats
-  players[name]
+  # players[name]
+
+  game_hash.each do |location, team_data|
+    team_data[:players].each do |player, stats|
+      if player === name
+        return stats
+      end
+    end
+  end
 end
 
 def find_team(team_name)
   team = nil
 
   game_hash.each do |location, team_data|
-    team_data.each do |attribute, data|
-      if data === team_name
-        team = team_data
-      end
+    if team_data[:team_name] === team_name
+      team = team_data
     end
   end
 
   team
 end
 
-# puts "#{game_hash.values}"
-# puts "#{find_team("Brooklyn Nets")}"
 
-##################################
+################################################################################
 
 def num_points_scored(name)
   player = find_player(name)
@@ -169,11 +172,12 @@ def team_names
   teams = []
 
   game_hash.each do |location, team_data|
-    team_data.each do |attribute, data|
-      if attribute === :team_name
-        teams.push(data)
-      end
-    end
+    teams.push(team_data[:team_name])
+    # team_data.each do |attribute, data|
+    #   if attribute === :team_name
+    #     teams.push(data)
+    #   end
+    # end
   end
 
   teams
@@ -184,11 +188,13 @@ def player_numbers(team_name)
   players_hash = find_team(team_name)[:players]
 
   players_hash.each do |player, data|
-    data.each do |attribute, val|
-      if attribute === :number
-        numbers.push(val)
-      end
-    end
+    numbers.push(data[:number]);
+
+    # data.each do |attribute, val|
+    #   if attribute === :number
+    #     numbers.push(val)
+    #   end
+    # end
   end
 
   numbers
@@ -212,5 +218,3 @@ def big_shoe_rebounds
 
   max_stats[:rebounds]
 end
-
-puts "#{big_shoe_rebounds}"
