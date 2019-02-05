@@ -1,5 +1,3 @@
-require 'pry'
-
 def game_hash
   {
     home: {
@@ -117,38 +115,7 @@ def game_hash
   }
 end
 
-#### helper methods ###############################################################
-def players
-  #method to combine our players data in one hash
-  home = game_hash[:home][:players]
-  away = game_hash[:away][:players]
-  # using merge to combine hashes, combines players since can only have unique key
-  home.merge(away)
-end
-
-def find_player_stats(name)
-  # players[name]
-  # retrieve given player's stats
-  game_hash.each do |location, team_data|
-    team_data[:players].each do |player, stats|
-      if player === name
-        return stats
-      end
-    end
-  end
-end
-
-def find_team(team_name)
-  team = nil
-  # returns given team's data
-  game_hash.each do |location, team_data|
-    if team_data[:team_name] === team_name
-      team = team_data
-    end
-  end
-
-  team
-end
+# puts "#{game_hash}"
 
 def team_points(team) #team = team_data[:players]
   score = 0
@@ -161,94 +128,6 @@ def team_points(team) #team = team_data[:players]
 
   score
 end
-
-
-################################################################################
-
-def num_points_scored(name)
-  player = find_player_stats(name)
-  player[:points]
-end
-
-def shoe_size(name)
-  player = find_player_stats(name)
-  player[:shoe]
-end
-
-def team_colors(team_name)
-  team_stats = find_team(team_name)
-  color =  team_stats[:colors]
-end
-
-def team_names
-  teams = []
-
-  game_hash.each do |location, team_data|
-    teams.push(team_data[:team_name])
-    # team_data.each do |attribute, data|
-    #   if attribute === :team_name
-    #     teams.push(data)
-    #   end
-    # end
-  end
-
-  teams
-end
-
-def player_numbers(team_name)
-  numbers = []
-  players_hash = find_team(team_name)[:players]
-
-  players_hash.each do |player, data|
-    numbers.push(data[:number]);
-
-    # data.each do |attribute, val|
-    #   if attribute === :number
-    #     numbers.push(val)
-    #   end
-    # end
-  end
-
-  numbers
-end
-
-def player_stats(player_name)
-  find_player_stats(player_name)
-end
-
-def big_shoe_rebounds
-  max = nil
-  max_stats = nil
-
-  players.each do |player, stats|
-    shoe_size = stats[:shoe]
-    if max == nil || shoe_size > max
-      max = shoe_size
-      max_stats = stats
-    end
-  end
-
-  max_stats[:rebounds]
-end
-
-
-###################### Bonus ########################################
-def most_points_scored
-  max = nil
-  max_points = nil
-
-  players.each do |player, stats|
-    points = stats[:points]
-    if max == nil || points > max
-      max = points
-      max_points = player
-    end
-  end
-
-  max_points
-end
-
-# puts "#{most_points_scored}"
 
 def winning_team
   home_points = 0
@@ -271,35 +150,4 @@ def winning_team
   end
 end
 
-# puts "#{winning_team}"
-
-def player_with_longest_name
-  longest = ""
-
-  players.each do |player, stats|
-    if player.length > longest.length
-      longest = player
-    end
-  end
-
-  longest
-end
-
-# puts "#{player_with_longest_name}"
-
-
-
-######################### SuperBonus ###############################
-def long_name_steals_a_ton?
-  longest_name = player_with_longest_name
-  long_steals = players[longest_name][:steals]
-
-  players.each do |player, stats|
-    steals = stats[:steals]
-    if steals > long_steals
-      return false
-    end
-  end
-
-  return true
-end
+puts "#{winning_team}"
