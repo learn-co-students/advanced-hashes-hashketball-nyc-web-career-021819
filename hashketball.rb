@@ -1,9 +1,9 @@
 # Write your code here!
 require "pry"
 
-def game_hash
+def game_hash                                         #create a hash
 
-  game_hash = {
+  game_hash = {                                       #game_hash
     :home => {
       :team_name => "Brooklyn Nets",
       :colors => ["Black", "White"],
@@ -120,47 +120,47 @@ def game_hash
 end
 
 def num_points_scored(player)
-  game_hash.each do |key, value|
-    value[:players].each do |name, stat|
-      if name == player
-        return stat[:points]
+  game_hash.each do |key, value|                #iterate over "game_hash"
+    value[:players].each do |name, stat|        #iterate over values in game_hash to :players
+      if name == player                         #if name in :players match player arg
+        return stat[:points]                    #return all values in :points
       end
     end
   end
 end
 
 def shoe_size(player)
-  game_hash.each do |key, value|
+  game_hash.each do |key, value|                    
     value[:players].each do |name, stat|
       if name == player
-        return stat[:shoe]
+        return stat[:shoe]                      #return all values in :shoe
       end
     end
   end
 end
 
 def team_colors(team)
-  game_hash.each do |key, value|
-    if value[:team_name] == team
-      return value[:colors]
+  game_hash.each do |key, value|                #iterate over "game_hash"
+    if value[:team_name] == team                #if values in team are present in :team_name
+      return value[:colors]                     #return values in :colors
     end 
   end
 end
 
 def team_names
-  team_array = [] #has to return in an array, create new array for to display
-  game_hash.each do |key, value|
-      team_array << value[:team_name] # pushing elements into the array
+  team_array = []                 #has to return in an array, create new array for to display
+  game_hash.each do |key, value|           #iterate thru game_hash
+      team_array << value[:team_name]      #pushing values of :team_name into the new array
     end 
     return team_array
   end
   
 def player_numbers(team)
-  numbers_array = []
-  game_hash.each do |key, value|
-    value[:players].each do |name, stat|
-      if value[:team_name] == team
-        numbers_array << stat[:number]
+  numbers_array = []                               #new array
+  game_hash.each do |key, value|                  #iterate thru game_hash
+    value[:players].each do |name, stat|          #iterate thru :players
+      if value[:team_name] == team                #if values in team match :team_name
+        numbers_array << stat[:number]            #push :number into the new array
       end
     end
   end
@@ -170,18 +170,23 @@ end
 def player_stats(player)
   game_hash.each do |key, value|
     value[:players].each do |name, stat|
-      if name == player
-        return stat
+      if name == player                     #determine if values in name match arg "player"
+        return stat                         #return values in stat
       end
     end
   end
 end
 
 def big_shoe_rebounds
+  shoe = []
   game_hash.each do |key, value|
     value[:players].each do |name, stat|
-      if stat[:shoe] > 0 
-        return stat[:rebounds]
+      shoe << stat[:shoe]                       #pushing all values of :shoe into
+    end
+      largest_shoe = shoe.max
+        value[:players].each do |name, stat|    #iterating in diff block
+          if stat[:shoe] == largest_shoe        #getting value in :shoe that match largest_shoe
+        return stat[:rebounds]                  #return that value in rebounds for that specfic                                           value associated with the largest_shoe
       end
     end
   end
