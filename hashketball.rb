@@ -232,6 +232,3 @@ def big_shoe_rebounds
   end
   rebounds
 end
-
-puts player_numbers("Charlotte Hornets")
-puts player_stats("Bismak Biyombo")
